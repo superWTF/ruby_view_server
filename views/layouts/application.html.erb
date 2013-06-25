@@ -1,3 +1,6 @@
+
+
+
 <%
   def link_to(name, url)
     return "<a href='#{url}'>#{name}</a>"
@@ -13,15 +16,32 @@
     <%= link_to('This is a link to google', 'http://google.com') %>
       <a href='me.html'>Me</a>
 
+    
+
+
     </p>
     <hr />
+    <%= @request.query.inspect %>
     <div>
       <%= yield %>
     </div>
     <hr />
     <div>
       <h3> I'm a footer</h3>
-      <p>Put things in the footer</p>
+      
+      <p>
+        <% if @request.query['first_name'] && !@request.query['first_name'].empty? %>
+  Hello there <%= @request.query['first_name'] %>
+<% else %>
+  Enter thy name
+<% end %>
+
+      <form method='post' action="<%= @request.path %>">
+      First name: <input type="text" name="first_name" placeholder='first name'/><br />
+      E-mail<input type="email" placeholder='you@whatevs.com'><br />
+      <input type="submit" value="Submit" />
+      </form>
+      Put things in the footer</p>
       <a href="http://google.com">Just in case you need another link to google</a>
     </div>
   </body>
